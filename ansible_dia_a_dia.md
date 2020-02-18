@@ -35,7 +35,7 @@ layout: false
 .right-column[
 ### Problemas ao gerir muitos servidores:
 <br><br>
-- sem padronização nas instalações
+- não há padronização nas instalações
 
 - documentação defasada, incompleta ou ausente
 
@@ -504,7 +504,7 @@ role/
   defaults/
   meta/
 ```
-Cada diretório dentro da role deve conter um arquivo `main.yml` que deve conter as instruções de cada seção.
+Alguns diretórios dentro da role irão conter um arquivo `main.yml` que deve conter as instruções de cada seção.
 
 ]
 ---
@@ -524,7 +524,7 @@ Contém _handlers_, que podem ser executados por esse _role_ ou qualquer outro f
 ###files
 Contém os arquivos que pode ser adicionados por esse _role_.
 ###templates
-Contém modelos para seren implantados por esse _role_.
+Contém modelos para serem implantados por esse _role_.
 ]
 ---
 .left-column[
