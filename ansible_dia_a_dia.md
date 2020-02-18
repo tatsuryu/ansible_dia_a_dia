@@ -341,4 +341,29 @@ Para obter ajuda sobre um módulo específico é só informar o nome:
   ## Handlers
 ]
 .right-column[
+## Handlers 
+São uma resposta a uma alteração feita por um evento. Pode ser utilizado por exemplo quando é feita alguma alteração em uma configuração e você precisa que o serviço seja reiniciado.
+
+```
+  ---
+  - hosts: all
+    handlers:
+      - name: Reinicia apache
+        service:
+          name: apache2
+          state: restarted
+    tasks:
+      - name: Instala apache
+        apt:
+          update_cache: yes
+          name: apache2
+          state: present
+      
+      - name: Copia configuração do site
+        copy:
+          src: site.conf
+          dest: /etc/apache2/sites-enabled/002-site.conf
+        notify: Reinicia apache
+  ...
+```
 ]
