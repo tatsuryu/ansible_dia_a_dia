@@ -367,3 +367,102 @@ São uma resposta a uma alteração feita por um evento. Pode ser utilizado por 
   ...
 ```
 ]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+]
+.right-column[
+Por padrão, a primeira etapa na execução de um _playbook_ é o _Gathering Facts_, a menos que seja desativado com a opção: `gather_facts: no`.
+Esta task é a execução do módulo _setup_, este módulo coleta vários valores e preenche na variável _ansible_facts_
+
+- Desativando facts:
+
+```
+~$ cat facts.yaml
+---
+- hosts: testing
+  gather_facts: no
+  tasks:
+    - name:
+      debug:
+        msg: "ola mundo"
+```
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+]
+.right-column[
+- Playbook utilizando os valores de facts:
+
+```
+~$ cat facts.yaml
+---
+- hosts: testing
+  tasks:
+  - name: IPs
+    debug:
+      msg: "IP do host são: {{ ansible_all_ipv4_addresses }}"
+
+  - name: O primeiro ip
+    debug:
+      msg: "O primeiro ip é: {{ ansible_all_ipv4_addresses.0 }}"
+...
+```
+
+utilizando o `setup`:
+```
+~$ ansible testing -i inventory -m setup -a filter="ansible_all_ipv4_addresses"
+testing | SUCCESS => {
+    "ansible_facts": {
+        "ansible_all_ipv4_addresses": [
+            "172.17.0.2"
+        ],
+        "discovered_interpreter_python": "/usr/bin/python3.5"
+    },
+    "changed": false
+}
+```
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+]
+.right-column[
+- Resultado:
+
+```
+~$ ansible-playbook -i inventory fact.yaml 
+
+
+PLAY [testing] ******************************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************
+ok: [testing]
+
+TASK [IPs] **********************************************************************************************************
+ok: [testing] => {
+    "msg": "IP do host são: ['172.17.0.2']"
+}
+
+TASK [O primeiro ip] ************************************************************************************************
+ok: [testing] => {
+    "msg": "O primeiro ip é: 172.17.0.2"
+}
+
+PLAY RECAP **********************************************************************************************************
+testing                    : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
+]
