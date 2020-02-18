@@ -8,7 +8,7 @@ no dia a dia
 ---
 layout: false
 .left-column[
-  ## Quem sou eu?
+  ## Quem sou eu ?
 ]
 .right-column[
     Ícaro
@@ -29,7 +29,7 @@ layout: false
 ]
 ---
 .left-column[
-  ## Quem sou eu?
+  ## Quem sou eu ?
   ## Contexto
 ]
 .right-column[
@@ -465,4 +465,108 @@ ok: [testing] => {
 PLAY RECAP **********************************************************************************************************
 testing                    : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ```
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+  ## Roles
+]
+.right-column[
+## Roles
+
+É uma forma de automaticamente carregar seus arquivos de variáveis, tasks e handlers baseados numa estrutura de diretórios.
+
+### Estrututura de diretório de uma Role
+```
+role/
+  tasks/
+  handlers/
+  files/
+  templates/
+  vars/
+  defaults/
+  meta/
+```
+Cada diretório dentro da role deve conter um arquivo `main.yml` que deve conter as instruções de cada seção.
+
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+  ## Roles
+]
+.right-column[
+###tasks
+Contém a lista das _tasks_ a serem executadas nesta _role_.
+###handlers
+Contém _handlers_, que podem ser executados por esse _role_ ou qualquer outro fora deste.
+###files
+Contém os arquivos que pode ser adicionados por esse _role_.
+###templates
+Contém modelos para seren implantados por esse _role_.
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+  ## Roles
+]
+.right-column[
+###vars
+Variáveis para uso do _role_.
+###defaults
+Valores padrões para variáveis deste _role_.
+###meta
+Define meta dados deste _role_.
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+  ## Roles
+]
+.right-column[
+_`roles/exemplo/tasks/main.yml`_
+```
+- name: Inclui tarefas para o redhat
+  import_tasks: redhat.yml
+  when: ansible_facts['os_family']|lower == 'redhat'
+- name: Inclui tarefas para o debian
+  import_tasks: debian.yml
+  when: ansible_facts['os_family']|lower == 'debian'
+...
+```
+
+_`roles/exemplo/tasks/redhat.yml`_
+```
+---
+- yum:
+    name: httpd
+    state: present
+...
+```
+
+_`roles/exemplo/tasks/debian.yml`_
+```
+---
+- apt:
+    name: apache2
+    state: present
+...
+```
+.footnote[Baseado em [exemplo](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure) na página do ansbile.]
 ]
