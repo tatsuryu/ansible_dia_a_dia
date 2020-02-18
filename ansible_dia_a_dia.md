@@ -53,16 +53,20 @@ layout: false
   ## O que é ?
 ]
 .right-column[
-  Ansible é:
 
+<div align="center"><img width="30%" src="https://cdn.worldvectorlogo.com/logos/ansible.svg"></img></div>
+
+<br>
+É escrito em python, é _client-less_, e roda em muitos sistemas _Unix-like_ e em Windows.
+Utiliza o formato declarativo: [YAML](https://pt.wikipedia.org/wiki/YAML) no seu sistema de configuração.
+
+<br>
 - Gerenciador de configuração
 
 - Ferramenta de automação
 
 - Ferramenta de deploy
 
-É escrito em python, é _client-less_, e roda em muitos sistemas _Unix-like_ e em Windows.
-Utiliza o formato declarativo: [YAML](https://pt.wikipedia.org/wiki/YAML) no seu sistema de configuração.
 ]
 ---
 .left-column[
@@ -93,6 +97,7 @@ pip install ansible
 ```
 pip install --user ansible
 ```
+<br><br>
 <div><asciinema-player src="./screencasts/install.cast"></asciinema-player></div>
 ]
 ---
@@ -275,21 +280,14 @@ testing                    : ok=2    changed=0    unreachable=0    failed=0    s
 - Foi projetada para representar de forma visualmente simples
 - Representa dados como uma combinação: listas, hashes e dados escalares
 
+Exemplo:
 ```
-~$ cat nada.yaml
 ---
-name: Teste
-type: exemplo
-data: |
-  alguns valores em
-  multiplas linhas.
-lista:
-  - item 1
-  - item 2
-  - item 3
-content: >
-  isto é um multi-line
-  formatting
+evento:
+  nome: "Meetup DevCia"
+  topicos:
+    - ansible
+    - "JAMStack com GatsbyJS"
 ...
 ```
 ]
@@ -299,21 +297,36 @@ content: >
   ## YAML
 ]
 .right-column[
-
-YAML parseado:
+```
+~$ cat nada.yaml
+---
+nome: Teste
+tipo: exemplo
+dados: |
+  alguns valores em
+  multiplas linhas.
+lista:
+  - item 1
+  - item 2
+  - item 3
+conteudo: >
+  isto é um multi-line
+  formatting
+...
+```
 
 ```
 ~$ python -c 'import json; import yaml; x=yaml.safe_load(open("nada.yaml","r").read()); print(json.dumps(x, indent=2))'
 {
-  "name": "Teste",
-  "type": "exemplo",
-  "data": "alguns valores em\nmultiplas linhas.\n",
+  "nome": "Teste",
+  "tipo": "exemplo",
+  "dados": "alguns valores em\nmultiplas linhas.\n",
   "lista": [
     "item 1",
     "item 2",
     "item 3"
   ],
-  "content": "isto \u00e9 um multi-line formatting\n"
+  "conteudo": "isto \u00e9 um multi-line formatting\n"
 }
 ```
 ]
