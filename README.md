@@ -10,3 +10,5 @@ python3 -mhttp.server
 ```
 
 Depois é somente acessar: [localhost:8000](http://localhost:8000)
+
+A Imagem de docker citada nos exemplos, é [esta](https://github.com/tatsuryu/debian-stretch-molecule).
