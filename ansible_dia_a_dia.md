@@ -160,3 +160,64 @@ localhost | SUCCESS => {
 }
 ```
 ]
+---
+.left-column[
+  ## Quem sou eu ?
+  ## Contexto
+  ## O que é ?
+  ## Instalação
+  ## Primeiros passos
+  ## Idempotência
+]
+.right-column[
+  ### Idempotência: 
+  É a propriedade de que algumas operações têm de poderem ser aplicadas várias vezes sem que o valor do resultado se altere após a aplicação inicial.
+
+  - Primeira execução:
+
+```sh
+~$ docker run --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro --name=testing -d tatsuryu/debian-systemd-molecule:9
+~$ cat inventory 
+testing ansible_connection=docker ansible_user=root
+~$ ansible testing -i inventory -m apt -a "update_cache=yes name=apache2"
+testing | CHANGED => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.5"
+    },
+    "cache_update_time": 1582028646,
+    "cache_updated": false,
+    "changed": true,
+    "stderr": "debconf: delaying package configuration, since apt-utils is not installed\n",
+    "stderr_lines": [
+        "debconf: delaying package configuration, since apt-utils is not installed"
+    ],
+    "stdout": ...,
+    "stdout_lines": [ ... ],
+}
+```
+]
+---
+.left-column[
+  ## Quem sou eu ?
+  ## Contexto
+  ## O que é ?
+  ## Instalação
+  ## Primeiros passos
+  ## Idempotência
+]
+.right-column[
+
+  - Segunda execução:
+  
+```
+~$ ansible testing -i inventory -m apt -a "update_cache=yes name=apache2"
+testing | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3.5"
+    },
+    "cache_update_time": 1582028646,
+    "cache_updated": false,
+    "changed": false
+}
+```
+]
