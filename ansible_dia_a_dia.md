@@ -4,7 +4,7 @@ class: center, middle
 ---
 #Ansible
 no dia a dia
-.footnote[github: [ansible no dia a dia](https://github.com/tatsuryu/ansible)]
+.footnote[github: [ansible no dia a dia](https://github.com/tatsuryu/ansible_dia_a_dia)]
 ---
 layout: false
 .left-column[
@@ -39,7 +39,7 @@ layout: false
 
 - documentação defasada, incompleta ou ausente
 
-- muitos _shellscripts_ que sempre aumentam pra prever todos os casos
+- muitos _shellscripts_ que sempre aumentam em tamanho e complexidade pra prever todos os casos
 
 - alterações em massa trabalhosas e propensas a erro
 
@@ -104,7 +104,7 @@ pip install --user ansible
   ## Primeiros passos
 ]
 .right-column[
-  A configuração dos hosts é feito no arquivo de [_inventory_](https://docs.ansible.com/ansible/2.4/intro_inventory.html) que permite vários formatos como: json(dinâmico), ini e yaml.
+A configuração dos hosts é feito no arquivo de [_inventory_](https://docs.ansible.com/ansible/2.4/intro_inventory.html) que permite vários formatos como: json(dinâmico), ini e yaml.
 
 Exemplo:
 - Subindo os hosts:
@@ -570,3 +570,65 @@ _`roles/exemplo/tasks/debian.yml`_
 ```
 .footnote[Baseado em [exemplo](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-directory-structure) na página do ansbile.]
 ]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+  ## Roles
+  ## Galaxy
+]
+.right-column[
+**Galaxy** é um [site](https://galaxy.ansible.com/) para compartilhar e encontrar conteúdo de **Ansible**
+Possui um cliente, que te permite:
+- Criar uma estrutura modelo de role
+- Autenticar no site
+- Enviar seus roles
+- Pesquisar e baixar roles
+- etc.
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+  ## Facts
+  ## Roles
+  ## Galaxy
+]
+.right-column[
+### Iniciando um role com galaxy
+
+```
+~$ ansible-galaxy init teste
+- Role teste was created successfully
+~$ tree teste/
+teste/
+├── README.md
+├── defaults
+│   └── main.yml
+├── files
+├── handlers
+│   └── main.yml
+├── meta
+│   └── main.yml
+├── tasks
+│   └── main.yml
+├── templates
+├── tests
+│   ├── inventory
+│   └── test.yml
+└── vars
+    └── main.yml
+
+8 directories, 8 files
+
+```
+]
+---
+layout: inicial
+class: center, middle
+#Perguntas ?
