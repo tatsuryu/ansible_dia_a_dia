@@ -33,11 +33,13 @@ layout: false
   ## Contexto
 ]
 .right-column[
-  Problemas ao gerir muitos servidores:
-
+### Problemas ao gerir muitos servidores:
+<br><br>
 - sem padronização nas instalações
 
 - documentação defasada, incompleta ou ausente
+
+- muitos _shellscripts_ que sempre aumentam pra prever todos os casos
 
 - alterações em massa trabalhosas e propensas a erro
 
@@ -208,7 +210,7 @@ testing | CHANGED => {
 .right-column[
 
   - Segunda execução:
-  
+
 ```
 ~$ ansible testing -i inventory -m apt -a "update_cache=yes name=apache2"
 testing | SUCCESS => {
@@ -220,4 +222,123 @@ testing | SUCCESS => {
     "changed": false
 }
 ```
+]
+---
+.left-column[
+  ## Playbooks
+]
+.right-column[
+
+  Escritos em **YAML**, descrevem o _estado_ que você deseja.
+
+  Exemplo:
+
+  ```
+  ~$ cat apache.yaml
+  ---
+  - hosts: all
+    tasks:
+      - name: Instala apache
+        apt:
+          update_cache: yes
+          name: apache2
+          state: present
+  ...
+  ```
+
+  Executando:
+
+  ```sh
+~$ ansible-playbook -i inventory apache.yaml --limit testing
+
+PLAY [all] **********************************************************************************************************
+
+TASK [Gathering Facts] **********************************************************************************************
+ok: [testing]
+
+TASK [Instala apache] ***********************************************************************************************
+ok: [testing]
+
+PLAY RECAP **********************************************************************************************************
+testing                    : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+  ```
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+]
+.right-column[
+## YAML Ain't Markup Language
+
+- Inicialmente: _Yet Another Markup Language_
+- Foi projetada para representar de forma visualmente simples
+- Representa dados como uma combinação: listas, hashes e dados escalares
+
+```
+~$ cat nada.yaml
+---
+name: Teste
+type: exemplo
+data: |
+  alguns valores em
+  multiplas linhas.
+lista:
+  - item 1
+  - item 2
+  - item 3
+content: >
+  isto é um multi-line
+  formatting
+...
+```
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+]
+.right-column[
+
+YAML parseado:
+
+```
+~$ python -c 'import json; import yaml; x=yaml.safe_load(open("nada.yaml","r").read()); print(json.dumps(x, indent=2))'
+{
+  "name": "Teste",
+  "type": "exemplo",
+  "data": "alguns valores em\nmultiplas linhas.\n",
+  "lista": [
+    "item 1",
+    "item 2",
+    "item 3"
+  ],
+  "content": "isto \u00e9 um multi-line formatting\n"
+}
+```
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+]
+.right-column[
+Para obter uma lista dos módulos do ansible, você pode acessar a [página de módulos](https://docs.ansible.com/ansible/latest/modules/modules_by_category.html), ou localmente via shell:
+```
+~$ ansible-doc -l
+```
+Para obter ajuda sobre um módulo específico é só informar o nome:
+```
+~$ ansible-doc apt
+```
+]
+---
+.left-column[
+  ## Playbooks
+  ## YAML
+  ## Obtendo ajuda sobre os módulos
+  ## Handlers
+]
+.right-column[
 ]
